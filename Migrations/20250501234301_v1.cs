@@ -12,17 +12,17 @@ namespace BookRate.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "USUARIO",
                 columns: table => new
                 {
-                    IdUsuario = table.Column<int>(type: "integer", nullable: false)
+                    ID_USUARIO = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Cpf = table.Column<string>(type: "text", nullable: false),
-                    Nome = table.Column<string>(type: "text", nullable: false)
+                    CPF = table.Column<string>(type: "character varying(9)", maxLength: 9, nullable: false),
+                    NOME = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.IdUsuario);
+                    table.PrimaryKey("ID_USUARIO", x => x.ID_USUARIO);
                 });
         }
 
@@ -30,7 +30,7 @@ namespace BookRate.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "USUARIO");
         }
     }
 }

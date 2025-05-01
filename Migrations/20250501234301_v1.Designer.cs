@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookRate.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250501205604_v1")]
+    [Migration("20250501234301_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -28,21 +28,27 @@ namespace BookRate.Migrations
                 {
                     b.Property<int>("IdUsuario")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("ID_USUARIO");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdUsuario"));
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(9)
+                        .HasColumnType("character varying(9)")
+                        .HasColumnName("CPF");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("NOME");
 
-                    b.HasKey("IdUsuario");
+                    b.HasKey("IdUsuario")
+                        .HasName("ID_USUARIO");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("USUARIO", (string)null);
                 });
 #pragma warning restore 612, 618
         }
