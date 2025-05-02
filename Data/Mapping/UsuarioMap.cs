@@ -18,7 +18,7 @@ namespace BookRate.Data.Mapping
             builder.Property(u => u.Cpf)
                 .HasColumnName("CPF")
                 .IsRequired()
-                .HasMaxLength(9);
+                .HasMaxLength(11);
             builder.Property(u => u.Nome)
                    .HasColumnName("NOME")
                    .IsRequired()

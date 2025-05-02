@@ -1,5 +1,6 @@
 using BookRate.Components;
 using BookRate.Data;
+using BookRate.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 
@@ -14,7 +15,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 
 
+builder.Services.AddTransient<UsuarioRepository>();
+
 var app = builder.Build();
+
+app.MapGet("/bookrate/usuarios", async (UsuarioRepository usuarioRepository) =>
+{
+    return await usuarioRepository.GetAllAsync();
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
