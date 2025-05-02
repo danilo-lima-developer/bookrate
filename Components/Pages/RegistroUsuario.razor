@@ -1,0 +1,60 @@
+﻿@page "/registro-usuario"
+@using BookRate.Models
+@using BookRate.Repositories
+@inject UsuarioRepository _usuarioRepository
+
+<PageTitle>Registro usuário - BookRate </PageTitle>
+
+    <MudContainer MaxWidth="MaxWidth.Small">
+            <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+
+                <DataAnnotationsValidator />
+                <MudGrid>
+                    <MudItem xs="12" sm="12">
+                        <MudCard>
+                    <MudImage Src="imagens/logos/logo-bookrate.png"
+                              Alt="BookRate"
+                              Fluid="true"
+                              Class="rounded-lg"
+                              Style="width: 170px; height: auto; margin: 0 auto;" />
+                            <MudCardContent>
+                                <MudTextField Label="Nome Completo" 
+                                @bind-Value="model.Nome" For="@(() => model.Nome)" />
+                            </MudCardContent>
+                            <MudCardContent>
+                                <MudTextField Label="CPF" HelperText="apenas números"
+                                @bind-Value="model.Cpf" For="@(() => model.Cpf)" />
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Dark" Class="ml-auto">Registrar</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </MudItem>
+                </MudGrid>
+            </EditForm>
+    </MudContainer>
+
+@code {
+    Usuario model = new Usuario();
+    bool success;
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        try
+        {
+            await _usuarioRepository.CreateAsync(model);
+            success = true;
+            StateHasChanged();
+            model = new Usuario();
+
+
+            // Opcional: Limpar o formulário ou navegar para outra página
+            // model = new Usuario();
+        }
+        catch (Exception ex)
+        {
+            // Tratar erros (exibir mensagem para o usuário)
+            Console.WriteLine($"Erro ao registrar usuário: {ex.Message}");
+        }
+    }
+}
